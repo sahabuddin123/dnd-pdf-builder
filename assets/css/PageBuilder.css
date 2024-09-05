@@ -1,0 +1,230 @@
+/* PageBuilder.css */
+/* Styling for the Dropzone Area */
+.dropzone {
+    flex: 1;
+    padding: 16px;
+    min-height: 500px;
+    border: 2px dashed #ccc;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Grid and Grid Cells */
+.grid {
+    display: grid;
+}
+
+.grid-cell-wrapper {
+    position: relative;
+}
+
+.grid-cell {
+    min-height: 100px;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-collapse: collapse;
+    text-align: center;
+    position: relative;
+}
+
+/* Highlight when dragging over a grid cell */
+.grid-cell.is-over {
+    border-color: #aaa;
+    background-color: #e0e0e0;
+}
+
+/* Controls inside each grid cell */
+.grid-cell-icons {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+.icon-delete {
+    cursor: pointer;
+    color: red;
+    font-size: 20px;
+}
+
+.icon-move {
+    cursor: move;
+    font-size: 20px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Controls for each grid row */
+.grid-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f9f9f9;
+    padding: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.grid-row-controls {
+    position: absolute;
+    top: 10px;
+    right: -15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.icon-delete-row {
+    cursor: pointer;
+    font-size: 10px;
+    color: red;
+    background-color: transparent;
+    border-radius: 3px;
+    padding: 3px;
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
+}
+
+.icon-move-row {
+    cursor: move;
+    font-size: 20px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.grid-cell-element {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.grid-cell-element input {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.grid-cell-element button {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.element_section {
+    position: relative;
+}
+
+.menu-item {
+    position: absolute;
+    top: 0;
+    left: 0; /* Edit Style Button to Right */
+}
+
+.del_button {
+    height: 25px;
+}
+
+.edit_button {
+    height: 25px;
+    color: green;
+}
+
+.del_button:hover {
+    background-color: #fff;
+}
+
+.edit_button:hover {
+    background-color: #fff;
+}
+
+.icon-style-edit-button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.icon-style-edit-button:hover {
+    background-color: #e0e0e0;
+}
+
+.save-btn {
+    width: 30px;
+}
+
+.edit-input {
+    width: 50% !important;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+.edit-section {
+    display: flex;
+    align-items: center;
+}
+
+.btn-group-one {
+    background: #ffffff;
+    border-radius: 12px;
+    padding-left: 5px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 66%);
+}
+
+.btn-group-two {
+    background: #4caf50;
+    border-radius: 12px;
+    padding-left: 5px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 66%);
+}
+.edit-grid-cell-btn {
+    position: absolute;
+    top: -15px;
+    right: -2px;
+    cursor: pointer;
+    padding: 3px 10px;
+    font-size: 12px;
+    z-index: 11;
+    color: red;
+}
+.grid-cell{
+    min-height: 60px;
+}
+
+/* styles.css */
+/* .hide-on-pdf {
+    display: none !important;
+}
+   */
+  
+  @media print {
+    .dropzone, .grid-cell {
+      border: none !important; /* Hide borders during print */
+    }
+    .grid-row-controls,.icon-style-edit-button, .hide-on-pdf, .hide-for {
+        display: none !important;
+    }
+    .sidebar{
+        display: none !important;
+    }
+    .grid-row{
+        box-shadow: none !important;
+        border: none !important;
+        background-color: transparent;
+    }
+    .hide-on-pdf {
+        display: none !important;
+      }
+  }

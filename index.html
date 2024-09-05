@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Page Builder</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/GridCellStyleModal.css">
+    <link rel="stylesheet" href="assets/css/ImageModal.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/List.css">
+    <link rel="stylesheet" href="assets/css/Modal.css">
+    <link rel="stylesheet" href="assets/css/PageBuilder.css">
+    <link rel="stylesheet" href="assets/css/Sidebar.css">
+    <link rel="stylesheet" href="assets/css/TableCellModal.css">
+    <link rel="stylesheet" href="assets/css/TableModal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+
+<body>
+    <div id="page-builder">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <h3>Grid Options</h3>
+            <!-- Grid Options -->
+            <button class="draggable" data-type="1-grid">1 Grid</button>
+            <button class="draggable" data-type="2-grid">2 Grid</button>
+            <button class="draggable" data-type="3-grid">3 Grid</button>
+            <button class="draggable" data-type="4-grid">4 Grid</button>
+            <button class="draggable" data-type="2/10-grid">2/10 Grid</button>
+            <button class="draggable" data-type="10/2-grid">10/2 Grid</button>
+            <button class="draggable" data-type="3/9-grid">3/9 Grid</button>
+            <button class="draggable" data-type="9/3-grid">9/3 Grid</button>
+            <button class="draggable" data-type="4/8-grid">4/8 Grid</button>
+            <button class="draggable" data-type="8/4-grid">8/4 Grid</button>
+            <button class="draggable" data-type="5/7-grid">5/7 Grid</button>
+            <button class="draggable" data-type="7/5-grid">7/5 Grid</button>
+            <button class="draggable" data-type="6/6-grid">6/6 Grid</button>
+            <button class="draggable" data-type="4/6-grid">4/6 Grid</button>
+            <button class="draggable" data-type="6/4-grid">6/4 Grid</button>
+
+            <h3>Element Options</h3>
+            <!-- Element Options -->
+            <button class="draggable" data-type="text-heading">Text Heading</button>
+            <button class="draggable" data-type="text-p">Text Paragraph</button>
+            <button class="draggable" data-type="image">Image</button>
+            <button class="draggable" data-type="one-list">List</button>
+            <button class="draggable" data-type="table">Table</button>
+            <button class="draggable" data-type="table-two">Table Two</button>
+
+            <h3>Readymade Section</h3>
+            <!-- Readymade Sections -->
+            <button class="draggable" data-type="invoice-header">Invoice Header</button>
+            <button class="draggable" data-type="invoice-logo">Invoice Logo</button>
+            <button class="draggable" data-type="company-logo">Company Logo</button>
+            <button class="draggable" data-type="company-address">Company Address</button>
+            <button class="draggable" data-type="client-address">Client Address</button>
+            <button class="draggable" data-type="bank-details">Bank Details</button>
+            <button class="draggable" data-type="invoice-title">Invoice Title</button>
+            <button class="draggable" data-type="invoice-table">Invoice Table</button>
+            <button class="draggable" data-type="invoice-details">Invoice Details</button>
+            <button class="draggable" data-type="total-amount-table">Total Amount</button>
+            <button class="draggable" data-type="qr-code">QR Code</button>
+            <button class="draggable" data-type="invoice-footer">Invoice Footer</button>
+        </div>
+
+        <!-- Drop zone area -->
+        <div id="drop-zone">
+            <div id="grid-container">
+                <!-- গ্রিড রো এবং সেল ডাইনামিক্যালি এখানে যুক্ত হবে -->
+                <div id="grid-container">
+                    <!-- গ্রিড রো ডাইনামিক্যালি এখানে যুক্ত হবে -->
+                    <div class="grid-cell-wrapper">
+                        <div class="grid-cell grid-border" id="gridCell1">
+                            <div class="grid-cell-content"></div>
+                            <button class="icon-style-edit-button hide-on-pdf">Style</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="add-row">Add Row</button>
+            <!-- Rows and Elements will be added here dynamically -->
+        </div>
+
+        <!-- Modals -->
+        <div id="modal" style="display:none;"> <!-- Example modal -->
+            <input type="text" id="modal-input" />
+            <button id="modal-save">Save</button>
+        </div>
+        <!-- Modal Structure -->
+        <div id="general-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Element</h3>
+                    <button id="close-modal-button" class="close-button">X</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Input Fields for Element Editing -->
+                    <label>Enter Your Content Here:</label>
+                    <input id="content-input" type="text" placeholder="Edit content" class="modal-input" />
+
+                    <label>Content Alignment:</label>
+                    <div class="button-group">
+                        <button class="align-button" data-align="left">Left</button>
+                        <button class="align-button" data-align="center">Center</button>
+                        <button class="align-button" data-align="right">Right</button>
+                        <button class="align-button" data-align="justify">Justify</button>
+                    </div>
+
+                    <label>Font-size in px:</label>
+                    <input id="font-size-input" type="text" placeholder="Font Size" class="modal-input" />
+
+                    <label>Font Weight:</label>
+                    <div class="button-group font-weight-group">
+                        <button class="weight-button" data-weight="300">Slim</button>
+                        <button class="weight-button" data-weight="400">Regular</button>
+                        <button class="weight-button" data-weight="600">SemiBold</button>
+                        <button class="weight-button" data-weight="700">Bold</button>
+                        <button class="weight-button" data-weight="800">ExtraBold</button>
+                    </div>
+
+                    <label>Text Transform:</label>
+                    <div class="button-group text-transform-group">
+                        <button class="transform-button" data-transform="uppercase">Uppercase</button>
+                        <button class="transform-button" data-transform="lowercase">Lowercase</button>
+                        <button class="transform-button" data-transform="capitalize">Sentence Case</button>
+                    </div>
+
+                    <label>Text Style:</label>
+                    <div class="button-group text-style-group">
+                        <button id="regular-style-button" class="style-button">Regular</button>
+                        <button id="italic-style-button" class="style-button">Italic</button>
+                        <button id="underline-style-button" class="style-button">Underline</button>
+                    </div>
+
+                    <label>Font Color:</label>
+                    <input id="font-color-input" type="color" class="modal-input" />
+
+                    <label>Padding (Top Right Bottom Left):</label>
+                    <div class="padding-margin-inputs">
+                        <input id="padding-top" type="text" placeholder="Top" />
+                        <input id="padding-right" type="text" placeholder="Right" />
+                        <input id="padding-bottom" type="text" placeholder="Bottom" />
+                        <input id="padding-left" type="text" placeholder="Left" />
+                    </div>
+
+                    <label>Margin (Top Right Bottom Left):</label>
+                    <div class="padding-margin-inputs">
+                        <input id="margin-top" type="text" placeholder="Top" />
+                        <input id="margin-right" type="text" placeholder="Right" />
+                        <input id="margin-bottom" type="text" placeholder="Bottom" />
+                        <input id="margin-left" type="text" placeholder="Left" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-button" class="modal-save-button">Save</button>
+                    <button id="cancel-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Grid Cell Style Modal Structure -->
+        <div id="grid-cell-style-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Grid Cell Style</h3>
+                    <button id="close-grid-modal-button" class="close-button">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <label>
+                            <input type="checkbox" id="transparent-checkbox" />
+                            Is background transparent?
+                        </label>
+                    </div>
+
+                    <div id="background-color-group" class="input-group">
+                        <label>Background Color:</label>
+                        <input type="color" id="background-color-input" />
+                    </div>
+
+                    <!-- Padding Inputs -->
+                    <div class="input-group">
+                        <label>Padding:</label>
+                        <div class="padding-margin-group">
+                            <label>Top:</label>
+                            <input id="padding-top" type="text" placeholder="Top" />
+                            <label>Right:</label>
+                            <input id="padding-right" type="text" placeholder="Right" />
+                            <label>Bottom:</label>
+                            <input id="padding-bottom" type="text" placeholder="Bottom" />
+                            <label>Left:</label>
+                            <input id="padding-left" type="text" placeholder="Left" />
+                        </div>
+                    </div>
+
+                    <!-- Margin Inputs -->
+                    <div class="input-group">
+                        <label>Margin:</label>
+                        <div class="padding-margin-group">
+                            <label>Top:</label>
+                            <input id="margin-top" type="text" placeholder="Top" />
+                            <label>Right:</label>
+                            <input id="margin-right" type="text" placeholder="Right" />
+                            <label>Bottom:</label>
+                            <input id="margin-bottom" type="text" placeholder="Bottom" />
+                            <label>Left:</label>
+                            <input id="margin-left" type="text" placeholder="Left" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-grid-style-button" class="modal-save-button">Save</button>
+                    <button id="cancel-grid-style-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Image Modal Structure -->
+        <div id="image-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Image</h3>
+                    <button id="close-image-modal-button" class="close-button">X</button>
+                </div>
+                <div class="modal-body image-modal">
+                    <!-- Image Preview -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <label for="image-upload-frame" style="cursor: pointer;">
+                            <img id="image-preview" src="https://via.placeholder.com/200" alt="Preview"
+                                style="max-width: 200px; max-height: 200px; border: 1px solid #ddd;"
+                                title="Click to upload image" />
+                        </label>
+                        <!-- Hidden file input for image upload -->
+                        <input type="file" id="image-upload-frame" style="display: none;" accept="image/*" />
+                    </div>
+
+                    <!-- Image URL Input -->
+                    <label>Image Source URL:</label>
+                    <input type="text" id="image-source-url" placeholder="Enter Image Source URL" class="modal-input" />
+
+                    <!-- Image Properties -->
+                    <label>Height (px or % / auto):</label>
+                    <input type="text" id="image-height" placeholder="Height" class="modal-input" />
+
+                    <label>Width (px or % / auto):</label>
+                    <input type="text" id="image-width" placeholder="Width" class="modal-input" />
+
+                    <label>Border Radius (px):</label>
+                    <input type="number" id="image-border-radius" placeholder="Border Radius" class="modal-input" />
+
+                    <label>Padding (Top Right Bottom Left):</label>
+                    <div class="input-group">
+                        <input type="text" id="padding-top" placeholder="Top" />
+                        <input type="text" id="padding-right" placeholder="Right" />
+                        <input type="text" id="padding-bottom" placeholder="Bottom" />
+                        <input type="text" id="padding-left" placeholder="Left" />
+                    </div>
+
+                    <label>Margin (Top Right Bottom Left):</label>
+                    <div class="input-group">
+                        <input type="text" id="margin-top" placeholder="Top" />
+                        <input type="text" id="margin-right" placeholder="Right" />
+                        <input type="text" id="margin-bottom" placeholder="Bottom" />
+                        <input type="text" id="margin-left" placeholder="Left" />
+                    </div>
+
+                    <label>Float:</label>
+                    <select id="image-float" class="modal-input">
+                        <option value="none">None</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+
+                    <!-- Image Alignment -->
+                    <label>Alignment:</label>
+                    <div class="button-group">
+                        <button class="align-button" data-align="left">Left</button>
+                        <button class="align-button" data-align="center">Center</button>
+                        <button class="align-button" data-align="right">Right</button>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-image-button" class="modal-save-button">Save</button>
+                    <button id="cancel-image-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- List Modal Structure -->
+        <div id="list-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content list-modal-content">
+                <div class="modal-header">
+                    <h3>Edit List</h3>
+                    <div class="button-group">
+                        <button id="add-item-button" class="control-button"><i class="fa fa-plus"></i> Add Item</button>
+                        <button id="remove-item-button" class="control-button"><i class="fa fa-minus"></i> Remove
+                            Item</button>
+                    </div>
+                    <button id="close-list-modal-button" class="close-button">X</button>
+                </div>
+
+                <div class="modal-body list-modal-body">
+                    <div class="list-section">
+                        <label>List Items:</label>
+                        <div id="list-items-container">
+                            <!-- Dynamically populated list items will go here -->
+                        </div>
+                    </div>
+
+                    <div class="style-section">
+                        <label>Font Color:</label>
+                        <input type="color" id="font-color" class="modal-input" />
+
+                        <label>Font Weight:</label>
+                        <select id="font-weight" class="modal-input">
+                            <option value="300">Light</option>
+                            <option value="400">Regular</option>
+                            <option value="600">SemiBold</option>
+                            <option value="700">Bold</option>
+                            <option value="800">ExtraBold</option>
+                        </select>
+
+                        <label>Font Style:</label>
+                        <select id="font-style" class="modal-input">
+                            <option value="normal">Normal</option>
+                            <option value="italic">Italic</option>
+                        </select>
+
+                        <label>List Type:</label>
+                        <select id="list-type" class="modal-input">
+                            <option value="unordered">Unordered</option>
+                            <option value="ordered">Ordered</option>
+                        </select>
+
+                        <label>List Style Type:</label>
+                        <select id="list-style-type" class="modal-input">
+                            <!-- Options will be dynamically updated based on list type -->
+                        </select>
+
+                        <label>Text Alignment:</label>
+                        <div class="button-group">
+                            <button class="align-button" data-align="left"><i class="fa fa-align-left"></i></button>
+                            <button class="align-button" data-align="center"><i class="fa fa-align-center"></i></button>
+                            <button class="align-button" data-align="right"><i class="fa fa-align-right"></i></button>
+                            <button class="align-button" data-align="justify"><i
+                                    class="fa fa-align-justify"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-list-button" class="modal-save-button">Update</button>
+                    <button id="cancel-list-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Table Modal Structure -->
+        <div id="table-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content table-modal-content" style="max-width: 60%;">
+                <div class="modal-header">
+                    <h3>Edit Table</h3>
+                    <div class="table-control-buttons">
+                        <button id="add-row-button" class="control-button"><i class="fa fa-plus"></i> Add Row</button>
+                        <button id="remove-row-button" class="control-button"><i class="fa fa-minus"></i> Remove
+                            Row</button>
+                        <button id="add-column-button" class="control-button"><i class="fa fa-plus"></i> Add
+                            Column</button>
+                        <button id="remove-column-button" class="control-button"><i class="fa fa-minus"></i> Remove
+                            Column</button>
+                    </div>
+                    <button id="close-table-modal-button" class="close-button">X</button>
+                </div>
+                <div class="modal-body table-modal-body" style="max-height: 400px; overflow: scroll;">
+                    <table id="table-editor" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <thead>
+                            <tr id="table-headers">
+                                <!-- Headers will be dynamically added here -->
+                            </tr>
+                        </thead>
+                        <tbody id="table-rows">
+                            <!-- Rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-table-button" class="modal-save-button">Save</button>
+                    <button id="cancel-table-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Table Cell Modal Structure -->
+        <div id="table-cell-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Row Style</h3>
+                    <button id="close-table-cell-modal-button">X</button>
+                </div>
+                <div class="modal-body">
+                    <label>Background Color:</label>
+                    <input type="color" id="row-background-color" />
+
+                    <label>Font Color:</label>
+                    <input type="color" id="row-font-color" />
+                </div>
+                <div class="modal-footer">
+                    <button id="save-table-cell-button">Save</button>
+                    <button id="cancel-table-cell-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Table Row Modal Structure -->
+        <div id="table-row-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Row Style</h3>
+                    <button id="close-table-row-modal">X</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content Alignment -->
+                    <label>Content Alignment:</label>
+                    <div class="button-group">
+                        <button class="align-button" data-align="left">Left</button>
+                        <button class="align-button" data-align="center">Center</button>
+                        <button class="align-button" data-align="right">Right</button>
+                        <button class="align-button" data-align="justify">Justify</button>
+                    </div>
+
+                    <!-- Font Size Input -->
+                    <label>Font-size in px:</label>
+                    <input type="number" id="row-font-size" placeholder="Font Size" class="modal-input" />
+
+                    <!-- Font Weight -->
+                    <label>Font Weight:</label>
+                    <div class="button-group font-weight-group">
+                        <button class="weight-button" data-weight="300">Slim</button>
+                        <button class="weight-button" data-weight="400">Regular</button>
+                        <button class="weight-button" data-weight="600">SemiBold</button>
+                        <button class="weight-button" data-weight="700">Bold</button>
+                        <button class="weight-button" data-weight="800">ExtraBold</button>
+                    </div>
+
+                    <!-- Text Transform -->
+                    <label>Text Transform:</label>
+                    <div class="button-group text-transform-group">
+                        <button class="transform-button" data-transform="uppercase">Uppercase</button>
+                        <button class="transform-button" data-transform="lowercase">Lowercase</button>
+                        <button class="transform-button" data-transform="capitalize">Sentence Case</button>
+                    </div>
+
+                    <!-- Text Style -->
+                    <label>Text Style:</label>
+                    <div class="button-group text-style-group">
+                        <button class="style-button" id="regular-style">Regular</button>
+                        <button class="style-button" id="italic-style">Italic</button>
+                        <button class="style-button" id="underline-style">Underline</button>
+                    </div>
+
+                    <!-- Font Color -->
+                    <label>Font Color:</label>
+                    <input type="color" id="row-font-color" class="modal-input" />
+
+                    <!-- Background Color -->
+                    <label>Background Color:</label>
+                    <input type="color" id="row-background-color" class="modal-input" />
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-table-row-button" class="modal-save-button">Update</button>
+                    <button id="cancel-table-row-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Table Row Two Modal Structure -->
+        <div id="table-row-two-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Row Style</h3>
+                    <button id="close-table-row-two-modal">X</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content Alignment -->
+                    <label>Content Alignment:</label>
+                    <div class="button-group">
+                        <button class="align-button" data-align="left">Left</button>
+                        <button class="align-button" data-align="center">Center</button>
+                        <button class="align-button" data-align="right">Right</button>
+                        <button class="align-button" data-align="justify">Justify</button>
+                    </div>
+
+                    <!-- Font Size Input -->
+                    <label>Font-size in px:</label>
+                    <input type="number" id="row-two-font-size" placeholder="Font Size" class="modal-input" />
+
+                    <!-- Font Weight -->
+                    <label>Font Weight:</label>
+                    <div class="button-group font-weight-group">
+                        <button class="weight-button" data-weight="300">Slim</button>
+                        <button class="weight-button" data-weight="400">Regular</button>
+                        <button class="weight-button" data-weight="600">SemiBold</button>
+                        <button class="weight-button" data-weight="700">Bold</button>
+                        <button class="weight-button" data-weight="800">ExtraBold</button>
+                    </div>
+
+                    <!-- Text Transform -->
+                    <label>Text Transform:</label>
+                    <div class="button-group text-transform-group">
+                        <button class="transform-button" data-transform="uppercase">Uppercase</button>
+                        <button class="transform-button" data-transform="lowercase">Lowercase</button>
+                        <button class="transform-button" data-transform="capitalize">Sentence Case</button>
+                    </div>
+
+                    <!-- Text Style -->
+                    <label>Text Style:</label>
+                    <div class="button-group text-style-group">
+                        <button class="style-button" id="regular-style-two">Regular</button>
+                        <button class="style-button" id="italic-style-two">Italic</button>
+                        <button class="style-button" id="underline-style-two">Underline</button>
+                    </div>
+
+                    <!-- Font Color -->
+                    <label>Font Color:</label>
+                    <input type="color" id="row-two-font-color" class="modal-input" />
+
+                    <!-- Background Color -->
+                    <label>Background Color:</label>
+                    <input type="color" id="row-two-background-color" class="modal-input" />
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-table-row-two-button" class="modal-save-button">Update</button>
+                    <button id="cancel-table-row-two-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Table Two Modal Structure -->
+        <div id="table-two-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content table-modal-content" style="max-width: 60%;">
+                <div class="modal-header">
+                    <h3>Edit Table Two</h3>
+                    <div class="table-control-buttons">
+                        <button id="add-row-two" class="control-button"><i class="fa fa-plus"></i> Add Row</button>
+                        <button id="remove-row-two" class="control-button"><i class="fa fa-minus"></i> Remove
+                            Row</button>
+                        <button id="add-column-two" class="control-button"><i class="fa fa-plus"></i> Add
+                            Column</button>
+                        <button id="remove-column-two" class="control-button"><i class="fa fa-minus"></i> Remove
+                            Column</button>
+                    </div>
+                    <button id="close-table-two-modal" class="close-button">X</button>
+                </div>
+                <div class="modal-body table-modal-body" style="max-height: 400px; overflow: scroll;">
+                    <table id="table-two-content" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="save-table-two-button" class="modal-save-button">Save</button>
+                    <button id="cancel-table-two-button" class="modal-close-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+    <script src="assets/js/modal.js"></script>
+    <script src="assets/js/grid.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>
